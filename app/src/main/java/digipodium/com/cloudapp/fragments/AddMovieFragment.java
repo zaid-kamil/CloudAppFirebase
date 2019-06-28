@@ -52,13 +52,14 @@ public class AddMovieFragment extends Fragment {
                 showDialog("updating database");
                 FirebaseFirestore fs = FirebaseFirestore.getInstance();
                 fs.collection("movies")
-                        .add(movie) // the important data
+                        .add(new MyMovie(movie)) // the important data
                         .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                 hideDialog();
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getActivity(), "done", Toast.LENGTH_SHORT).show();
+                                    editMovie.setText("");
                                 }else{
                                     Toast.makeText(getActivity(), "failed", Toast.LENGTH_SHORT).show();
                                 }
